@@ -11,4 +11,4 @@ The [physical data model](db_model) for the Postgresql DBMS  has developed using
 The solution is deployed using [docker-compose](docker-compose.yml) with three containers:
 - a container with a Postgresql DBMS,
 - a container with a python script filling the database,
-- a container with a pgAdmin database administration tool.
+- a container with a pgAdmin database administration tool running on port 54320.
