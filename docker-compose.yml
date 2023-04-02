@@ -1,0 +1,36 @@
+version: "3.7"
+
+services:
+  pg:
+    image: postgres
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - 5432:5432
+
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "admin@sportclub.com"
+      PGADMIN_DEFAULT_PASSWORD: "secret_admin_password"
+      PGADMIN_CONFIG_SERVER_MODE: "False"
+    ports:
+      - 54320:80
+    depends_on:
+      - pg
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: python ./main.py
+    environment:
+      PGHOST: pg
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    depends_on:
+      - pg
+      - pgadmin
